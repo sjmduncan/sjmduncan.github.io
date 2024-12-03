@@ -215,7 +215,7 @@
 <li class="toctree-l1"><a class="reference internal" href="train.html">train.py</a></li>
 <li class="toctree-l1"><a class="reference internal" href="traintoml.html">train.toml</a></li>
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">utils.py (script)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#utils-py-members">utils.py (members)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#module-utils">utils.py (members)</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API Documentation</span></p>
 <ul>
@@ -298,14 +298,13 @@
 </dl>
 </section>
 </section>
-<section id="utils-py-members">
-<h1>utils.py (members)<a class="headerlink" href="#utils-py-members" title="Link to this heading">¶</a></h1>
-<p id="module-utils">A set of utilities for working with instances of RocNet, datasets, and pointclouds. This is both a script, and a module that can be imported.</p>
+<section id="module-utils">
+<span id="utils-py-members"></span><h1>utils.py (members)<a class="headerlink" href="#module-utils" title="Link to this heading">¶</a></h1>
+<p>A set of utilities for working with instances of RocNet, datasets, and pointclouds. This is both a script, and a module that can be imported.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="utils.Run">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">Run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">out_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cfg_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_collection</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#utils.Run" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Handle some runtime paths and config files</p>
+<dd><p>Handle some runtime paths and config files</p>
 <dl class="simple">
 <dt>Useful members:</dt><dd><p>START_TIME: filename-friendly timestamp of when this object was initialised
 logger: logger instance for top-level runtime modules to use
@@ -345,7 +344,7 @@ dir: directory containing the config file, and the output</p>
 <p>ref: array of raw points, probably straight from a LIDAR or other point cloud source
 cmp: array of points retrieved from a RocNet code
 vox_size: size of the voxels used to quantise the point cloud for RocNet</p>
-<p>returns: dict of the metrics, with keys for quantised versions prefixed with <a href="#id1"><span class="problematic" id="id2">q_</span></a></p>
+<p>returns: dict of the metrics, with keys for quantised versions prefixed with q_</p>
 </dd></dl>
 
 <dl class="py function">
@@ -477,7 +476,7 @@ vox_size: size of the voxels used to quantise the point cloud for RocNet</p>
 <li><a class="reference internal" href="#utils-_get_args-named-arguments">Named Arguments</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#utils-py-members">utils.py (members)</a><ul>
+<li><a class="reference internal" href="#module-utils">utils.py (members)</a><ul>
 <li><a class="reference internal" href="#utils.Run"><code class="docutils literal notranslate"><span class="pre">Run</span></code></a></li>
 <li><a class="reference internal" href="#utils.chamfer"><code class="docutils literal notranslate"><span class="pre">chamfer()</span></code></a></li>
 <li><a class="reference internal" href="#utils.clean_empty"><code class="docutils literal notranslate"><span class="pre">clean_empty()</span></code></a></li>

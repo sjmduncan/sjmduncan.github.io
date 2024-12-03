@@ -215,7 +215,7 @@
 <li class="toctree-l1"><a class="reference internal" href="train.html">train.py</a></li>
 <li class="toctree-l1"><a class="reference internal" href="traintoml.html">train.toml</a></li>
 <li class="toctree-l1"><a class="reference internal" href="utils.html">utils.py (script)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="utils.html#utils-py-members">utils.py (members)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html#module-utils">utils.py (members)</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API Documentation</span></p>
 <ul class="current">
@@ -292,8 +292,7 @@
 <dl class="py class">
 <dt class="sig sig-object py" id="rocnet.dataset.Dataset">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rocnet.dataset.</span></span><span class="sig-name descname"><span class="pre">Dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">folder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_grid_dim</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_samples</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rocnet.dataset.Dataset" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code></p>
-<p>Access a collection of Octrees as a torch dataset</p>
+<dd><p>Access a collection of Octrees as a torch dataset</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="rocnet.dataset.Dataset.load">
 <span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">grid_dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">leaf_dim</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rocnet.dataset.Dataset.load" title="Link to this definition">¶</a></dt>
@@ -338,8 +337,7 @@
 <dl class="py class">
 <dt class="sig sig-object py" id="rocnet.file.RocNetFile">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rocnet.file.</span></span><span class="sig-name descname"><span class="pre">RocNetFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_base_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rocnet.file.RocNetFile" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>A class for encoding and decoding large rocnet-compressed point-cloud files</p>
+<dd><p>A class for encoding and decoding large rocnet-compressed point-cloud files</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="rocnet.file.RocNetFile.decode">
 <span class="sig-name descname"><span class="pre">decode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path_in</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rocnet.file.RocNetFile.decode" title="Link to this definition">¶</a></dt>
@@ -378,11 +376,9 @@ of size tile_grid_dim in voxels.</p>
 vox_size: voxel size, vox_index = pts[idx] // vox_size
 tile_grid_dim: size of each tile in voxels, must be 64, 128, or 256
 shift: shift: 3D shift vector to apply to the voxel grid before tiling, array of int
-returns: list(corners, tiles)</p>
-<blockquote>
-<div><p>corners - grid indices of the bottom-left corners of the tiles (array, dtype=int)
+returns: list(corners, tiles)
+corners - grid indices of the bottom-left corners of the tiles (array, dtype=int)
 tiles - indices of occupied voxels for this tile (array dtype=uint8)</p>
-</div></blockquote>
 </dd></dl>
 
 </section>
@@ -392,8 +388,7 @@ tiles - indices of occupied voxels for this tile (array dtype=uint8)</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="rocnet.model.Decoder">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rocnet.model.</span></span><span class="sig-name descname"><span class="pre">Decoder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cfg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rocnet.model.Decoder" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
-<p>Module to decode all the nodes in the  tree</p>
+<dd><p>Module to decode all the nodes in the  tree</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="rocnet.model.Decoder.decode_loss">
 <span class="sig-name descname"><span class="pre">decode_loss</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feature_code</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expected_tree</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rocnet.model.Decoder.decode_loss" title="Link to this definition">¶</a></dt>
@@ -421,8 +416,7 @@ returns: [reconstruction_loss, node_classifier_loss] (a tensor with two elements
 <dl class="py class">
 <dt class="sig sig-object py" id="rocnet.model.Encoder">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rocnet.model.</span></span><span class="sig-name descname"><span class="pre">Encoder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cfg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rocnet.model.Encoder" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
-<p>Module to encode all the nodes in the  tree</p>
+<dd><p>Module to encode all the nodes in the  tree</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="rocnet.model.Encoder.encode_tree">
 <span class="sig-name descname"><span class="pre">encode_tree</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tree</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#rocnet.octree.Octree" title="rocnet.octree.Octree"><span class="pre">Octree</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rocnet.model.Encoder.encode_tree" title="Link to this definition">¶</a></dt>
@@ -442,12 +436,10 @@ returns: [reconstruction_loss, node_classifier_loss] (a tensor with two elements
 <dl class="py class">
 <dt class="sig sig-object py" id="rocnet.octree.Octree">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rocnet.octree.</span></span><span class="sig-name descname"><span class="pre">Octree</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_features</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_types</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rocnet.octree.Octree" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="py class">
+<dd><dl class="py class">
 <dt class="sig sig-object py" id="rocnet.octree.Octree.Node">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Node</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">leaf_feature</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">children</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rocnet.octree.Octree.Node" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="py method">
+<dd><dl class="py method">
 <dt class="sig sig-object py" id="rocnet.octree.Octree.Node.is_empty_leaf">
 <span class="sig-name descname"><span class="pre">is_empty_leaf</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#rocnet.octree.Octree.Node.is_empty_leaf" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -472,8 +464,7 @@ returns: [reconstruction_loss, node_classifier_loss] (a tensor with two elements
 <dl class="py class">
 <dt class="sig sig-object py" id="rocnet.octree.Octree.NodeType">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">NodeType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qualname</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rocnet.octree.Octree.NodeType" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
-<dl class="py attribute">
+<dd><dl class="py attribute">
 <dt class="sig sig-object py" id="rocnet.octree.Octree.NodeType.LEAF_EMPTY">
 <span class="sig-name descname"><span class="pre">LEAF_EMPTY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#rocnet.octree.Octree.NodeType.LEAF_EMPTY" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -548,8 +539,7 @@ leaf_dim: edge length of the octree leaf feature</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="rocnet.rocnet.RocNet">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rocnet.rocnet.</span></span><span class="sig-name descname"><span class="pre">RocNet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_or_cfg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_CUDA</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rocnet.rocnet.RocNet" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Transcoder for a particular implementation of RocNet</p>
+<dd><p>Transcoder for a particular implementation of RocNet</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="rocnet.rocnet.RocNet.compress_points">
 <span class="sig-name descname"><span class="pre">compress_points</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pointcloud</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rocnet.rocnet.RocNet.compress_points" title="Link to this definition">¶</a></dt>
@@ -626,8 +616,7 @@ leaf_dim: edge length of the octree leaf feature</p>
 <dl class="py class" id="module-rocnet.trainer">
 <dt class="sig sig-object py" id="rocnet.trainer.Trainer">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rocnet.trainer.</span></span><span class="sig-name descname"><span class="pre">Trainer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">run_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cfg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#rocnet.dataset.Dataset" title="rocnet.dataset.Dataset"><span class="pre">Dataset</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">valid_dataset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#rocnet.dataset.Dataset" title="rocnet.dataset.Dataset"><span class="pre">Dataset</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rocnet.trainer.Trainer" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="py method">
+<dd><dl class="py method">
 <dt class="sig sig-object py" id="rocnet.trainer.Trainer.load_snapshot">
 <span class="sig-name descname"><span class="pre">load_snapshot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">base_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rocnet.trainer.Trainer.load_snapshot" title="Link to this definition">¶</a></dt>
 <dd><p>Load a snapshot of the model, loss files, and optimiser/scheduler states</p>
@@ -672,7 +661,7 @@ return: true if all keys in extant are present in schema and have matching infer
 if lists are the same size –&gt; all elements must match types
 if lists are diff sizes    –&gt; all elements of the shorter list must match types in the sublist of the longer one</p>
 </dd>
-<dt>int/flouat</dt><dd><p>schema:float, extant:int   –&gt; True  (type promotion)
+<dt>int/float</dt><dd><p>schema:float, extant:int   –&gt; True  (type promotion)
 schema:int, extant:float   –&gt; False (avoids loss of precision)</p>
 </dd>
 </dl>
@@ -706,53 +695,14 @@ default_dict: dict object with the full default configuration schema.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="rocnet.utils.get_most_epoch_model">
-<span class="sig-prename descclassname"><span class="pre">rocnet.utils.</span></span><span class="sig-name descname"><span class="pre">get_most_epoch_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">base_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">suffix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">require</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_epochs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rocnet.utils.get_most_epoch_model" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
 <dt class="sig sig-object py" id="rocnet.utils.is_pow_two">
 <span class="sig-prename descclassname"><span class="pre">rocnet.utils.</span></span><span class="sig-name descname"><span class="pre">is_pow_two</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rocnet.utils.is_pow_two" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="rocnet.utils.layer_config">
-<span class="sig-prename descclassname"><span class="pre">rocnet.utils.</span></span><span class="sig-name descname"><span class="pre">layer_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">in_dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_layers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_ksize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_pad</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_stride</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rocnet.utils.layer_config" title="Link to this definition">¶</a></dt>
-<dd><p>in_dim: this is the leaf_dim in rocnet (one edge of a cubic volume)
-out_dim: dimensions of the node in rocnet (also one edge of a cubic volume)
-max_layers: maximum allowable convolutional layers
-max_ksize: maximum kernel size for any convolutional layer
-max_pad: maximum padding for any convolutional layer
-max_stride: maximum stride for any convolutional layer</p>
-<p>Output is in the form of a tree, see print_tree for how this is interpreted.</p>
-</dd></dl>
-
-<dl class="py function">
 <dt class="sig sig-object py" id="rocnet.utils.load_file">
 <span class="sig-prename descclassname"><span class="pre">rocnet.utils.</span></span><span class="sig-name descname"><span class="pre">load_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default_dict</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">quiet</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">require_exists</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rocnet.utils.load_file" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="rocnet.utils.print_tree">
-<span class="sig-prename descclassname"><span class="pre">rocnet.utils.</span></span><span class="sig-name descname"><span class="pre">print_tree</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tree</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_prefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rocnet.utils.print_tree" title="Link to this definition">¶</a></dt>
-<dd><blockquote>
-<div><p>Print a tree produced by the layer_config function.
-This is recursive, leave the _prefix argument alone when calling this.
-Output is printed sequence of arrays, where each array defines a set of convolution
-parameters which start at leaf_dim (the length of one edge of a leaf node in voxels)
-and end at whatever dimension the internal rocnet node size is (in this case 4)</p>
-</div></blockquote>
-<dl class="simple">
-<dt>[[ 0. 16.  0.  0.  0.] &lt;- init condition (leaf_dim=16 === in_dim of next layer)</dt><dd><p>[ 1. 15.  2.  0.  1.] &lt;- first layer (k=2, p=0, s=1, out_dim=15 === in_dim of next layer)
-[ 2.  8.  1.  0.  2.] &lt;- second layer (k=1, p=1, s=2, out_dim=8 === in_dim of next layer)
-[ 3.  4.  2.  0.  2.]] &lt;- third layer (k=2, p=0, s=2, out_dim=4 === input to the node encoder)</p>
-</dd>
-<dt>[[ 0. 16.  0.  0.  0.] &lt;- init condition for the next possible configuration</dt><dd><p>[ 1.  8.  2.  0.  2.]
-[ 2.  7.  2.  0.  1.]
-…</p>
-</dd>
-</dl>
-</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="rocnet.utils.save_file">
@@ -774,11 +724,6 @@ and end at whatever dimension the internal rocnet node size is (in this case 4)<
 <dl class="py function">
 <dt class="sig sig-object py" id="rocnet.utils.td_txt">
 <span class="sig-prename descclassname"><span class="pre">rocnet.utils.</span></span><span class="sig-name descname"><span class="pre">td_txt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rocnet.utils.td_txt" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="rocnet.utils.write_file">
-<span class="sig-prename descclassname"><span class="pre">rocnet.utils.</span></span><span class="sig-name descname"><span class="pre">write_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overwrite_ok</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rocnet.utils.write_file" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </section>
@@ -921,16 +866,12 @@ and end at whatever dimension the internal rocnet node size is (in this case 4)<
 <li><a class="reference internal" href="#rocnet.utils.deep_dict_compare_schema_values"><code class="docutils literal notranslate"><span class="pre">deep_dict_compare_schema_values()</span></code></a></li>
 <li><a class="reference internal" href="#rocnet.utils.deep_dict_merge"><code class="docutils literal notranslate"><span class="pre">deep_dict_merge()</span></code></a></li>
 <li><a class="reference internal" href="#rocnet.utils.ensure_file"><code class="docutils literal notranslate"><span class="pre">ensure_file()</span></code></a></li>
-<li><a class="reference internal" href="#rocnet.utils.get_most_epoch_model"><code class="docutils literal notranslate"><span class="pre">get_most_epoch_model()</span></code></a></li>
 <li><a class="reference internal" href="#rocnet.utils.is_pow_two"><code class="docutils literal notranslate"><span class="pre">is_pow_two()</span></code></a></li>
-<li><a class="reference internal" href="#rocnet.utils.layer_config"><code class="docutils literal notranslate"><span class="pre">layer_config()</span></code></a></li>
 <li><a class="reference internal" href="#rocnet.utils.load_file"><code class="docutils literal notranslate"><span class="pre">load_file()</span></code></a></li>
-<li><a class="reference internal" href="#rocnet.utils.print_tree"><code class="docutils literal notranslate"><span class="pre">print_tree()</span></code></a></li>
 <li><a class="reference internal" href="#rocnet.utils.save_file"><code class="docutils literal notranslate"><span class="pre">save_file()</span></code></a></li>
 <li><a class="reference internal" href="#rocnet.utils.sizeof_fmt"><code class="docutils literal notranslate"><span class="pre">sizeof_fmt()</span></code></a></li>
 <li><a class="reference internal" href="#rocnet.utils.td_to_txt"><code class="docutils literal notranslate"><span class="pre">td_to_txt()</span></code></a></li>
 <li><a class="reference internal" href="#rocnet.utils.td_txt"><code class="docutils literal notranslate"><span class="pre">td_txt()</span></code></a></li>
-<li><a class="reference internal" href="#rocnet.utils.write_file"><code class="docutils literal notranslate"><span class="pre">write_file()</span></code></a></li>
 </ul>
 </li>
 </ul>
