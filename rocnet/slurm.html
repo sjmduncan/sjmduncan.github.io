@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="examine_dataset.py" href="examine_dataset.html" /><link rel="prev" title="Conventions" href="conventions.html" />
 
-    <!-- Generated with Sphinx 8.1.3 and Furo 2024.08.06 -->
+    <link rel="shortcut icon" href="_static/favicon.ico"/><!-- Generated with Sphinx 8.1.3 and Furo 2024.08.06 -->
         <title>Train with SLURM - RocNet documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=354aac6f" />
@@ -259,8 +259,8 @@
           <section id="train-with-slurm">
 <h1>Train with SLURM<a class="headerlink" href="#train-with-slurm" title="Link to this heading">¶</a></h1>
 <p>These instructions assume you access the cluster via <code class="docutils literal notranslate"><span class="pre">ssh</span></code> (including using the VSCode remote connect plugin), and will use <code class="docutils literal notranslate"><span class="pre">sbatch</span></code> to start training jobs.
-Mostly, this is the same as the Quickstart instructions, but you probably have to live with whichever versions of python and CUDA are already installed on the nodes you’re going to use.</p>
-<p>All of these instructions are run on the cluster</p>
+Mostly, this is the same as the Quickstart instructions except that you probably have to live with whichever versions of python and CUDA are already installed on the nodes you’re going to use.</p>
+<p>All of these instructions are to be run on the a login node on the cluster</p>
 <ol class="arabic simple">
 <li><p>Get code <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">clone</span> <span class="pre">--depth</span> <span class="pre">1</span> <span class="pre">https://altitude.otago.ac.nz/rocnet/rocnet-example.git</span></code></p></li>
 <li><p>Replace the <code class="docutils literal notranslate"><span class="pre">{{PLACEHOLDER}}</span></code> values in <code class="docutils literal notranslate"><span class="pre">cluster-utils/slurm-check-*.sh</span></code> files match your environment</p></li>
@@ -291,12 +291,18 @@ Mostly, this is the same as the Quickstart instructions, but you probably have t
 </ol>
 <blockquote>
 <div><ul class="simple">
-<li><p>you can use <code class="docutils literal notranslate"><span class="pre">tail</span> <span class="pre">-f</span> <span class="pre">slurm-{JOB_NUM}.out</span></code> to modify messages as the output of the file changes</p></li>
+<li><p>you can use <code class="docutils literal notranslate"><span class="pre">tail</span> <span class="pre">-f</span> <span class="pre">slurm-{JOB_NUM}.out</span></code> to print messages as they’re flushed to the log file (i.e. the same output that you see running training locally, but a bit delayed)</p></li>
 </ul>
 </div></blockquote>
 <ol class="arabic simple" start="11">
 <li><p>Once the training run is done you need to retrieve the training run folder (probably using <code class="docutils literal notranslate"><span class="pre">scp</span></code> or <code class="docutils literal notranslate"><span class="pre">rsync</span></code>), and then you can use the <code class="docutils literal notranslate"><span class="pre">examine_*</span></code> and <code class="docutils literal notranslate"><span class="pre">test_*</span></code> scripts to evaluate the result.</p></li>
+<li><p>If you’ve got a partial training run (something crashed, training ran too longer than the SLURM <code class="docutils literal notranslate"><span class="pre">--time</span></code> limit) copy <code class="docutils literal notranslate"><span class="pre">slurm-train-resume.sh</span></code> and edit the <code class="docutils literal notranslate"><span class="pre">{{PLACEHOLDRS}}</span></code> to resume training from an existing snapshot of the model weights and optimiser.</p></li>
 </ol>
+<blockquote>
+<div><ul class="simple">
+<li><p>Note that you’ll probably need to run <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">utils.py</span> <span class="pre">--tidy</span> <span class="pre">$PATH-TO-TRAINING-RUN</span></code> to make sure that the resume will actually work (especially if training was interrupted or ran out of time).</p></li>
+</ul>
+</div></blockquote>
 </section>
 
         </article>
