@@ -259,7 +259,7 @@
           <p><code class="docutils literal notranslate"><span class="pre">utils.py</span></code> is a script you can invoke to clean up training runs, but also includes a class and some member functions for working with training runs.</p>
 <section id="utils-py-script">
 <h1>utils.py (script)<a class="headerlink" href="#utils-py-script" title="Link to this heading">¶</a></h1>
-<p><p>Utils for working with training runs an models</p>
+<p><p>Utils for working with training runs and models.</p>
 </p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">usage</span><span class="p">:</span> <span class="n">utils</span><span class="o">.</span><span class="n">py</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">clean</span><span class="o">-</span><span class="n">empty</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">clean</span><span class="o">-</span><span class="n">intermediate</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">tidy</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">noop</span><span class="p">]</span> <span class="n">folder</span>
 </pre></div>
@@ -268,7 +268,7 @@
 <h2>Positional Arguments<a class="headerlink" href="#utils-_get_args-positional-arguments" title="Link to this heading">¶</a></h2>
 <dl class="option-list">
 <dt><kbd>folder</kbd></dt>
-<dd><p>Folder to operate on. Can be a training run or a dataset</p>
+<dd><p>Training run or collection of training runs to operate on.</p>
 </dd>
 </dl>
 </section>
@@ -276,19 +276,19 @@
 <h2>Named Arguments<a class="headerlink" href="#utils-_get_args-named-arguments" title="Link to this heading">¶</a></h2>
 <dl class="option-list">
 <dt><kbd>--clean-empty</kbd></dt>
-<dd><p>Delete training run folders which did not produce <a href="#id1"><span class="problematic" id="id2">*</span></a>.pth snapshots</p>
+<dd><p>Delete training run folders which did not produce <a href="#id1"><span class="problematic" id="id2">*</span></a>.pth snapshots. Use with caution, might delete stuff while training is in progress.</p>
 <p>Default: <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
 </dd>
 <dt><kbd>--clean-intermediate</kbd></dt>
-<dd><p>Delete all sub-optimal snapshots in a training run</p>
+<dd><p>Delete all sub-optimal snapshots in a training run, save only the best (optimal validation loss score) and latest (which might not be the same).</p>
 <p>Default: <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
 </dd>
 <dt><kbd>--tidy</kbd></dt>
-<dd><p>Ensure that there’s a ‘model.pth’ file which matches the snapshot with the best validation score</p>
+<dd><p>Ensure that there’s a ‘model.pth’ file which matches the snapshot with the best validation score.</p>
 <p>Default: <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
 </dd>
 <dt><kbd>--noop</kbd></dt>
-<dd><p>List files to be deleted without actually deleting them</p>
+<dd><p>List file deletion/modification without actually doing them.</p>
 <p>Default: <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
 </dd>
 </dl>
@@ -300,114 +300,283 @@
 <dl class="py class">
 <dt class="sig sig-object py" id="utils.Run">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">Run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">out_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cfg_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_collection</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#utils.Run" title="Link to this definition">¶</a></dt>
-<dd><p>Handle some runtime paths and config files</p>
-<dl class="simple">
-<dt>Useful members:</dt><dd><p>START_TIME: filename-friendly timestamp of when this object was initialised
-logger: logger instance for top-level runtime modules to use
-cfg_path: path to the config file
-cfg: easydict containing the loaded config file
-run_dir: where all the output goes (is the same as dir if created with is_collection==False)
-dir: directory containing the config file, and the output</p>
+<dd><p>Start a new run with {out_dir} as the working dir, {out_dir}/{cfg_type}.toml as the config, and {out_dir}/{run_type}_ as the log and/or run_dir prefix</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>out_dir</strong> (<em>str</em>) – directory which contains the specified .toml config file, and where the output will go</p></li>
+<li><p><strong>cfg_type</strong> (<em>str</em>) – type of config to load, which is also the basename of the config file</p></li>
+<li><p><strong>run_type</strong> (<em>stry</em>) – prefix of basename of log file and if is_collection==True also self.run_dir</p></li>
+<li><p><strong>is_collection</strong> (<em>bool</em>) – self.run_dir is {out_dir}/{run_type}_{START_TIME} (use this for training, benchmarking, or things which produce an annoying number of output files)</p></li>
+<li><p><strong>default_config</strong> (<em>dict</em>) – dict with default config values, should contain the whole structure of the config file</p></li>
+<li><p><strong>seed</strong> (<em>int</em>) – random seed to use for torch.seed NOTE: this should also use torch.use_deterministic_algorithms(True) but it’s not that simple with CUDA</p></li>
+</ul>
 </dd>
 </dl>
+<p>Useful Attributes:</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="utils.Run.START_TIME">
+<span class="sig-name descname"><span class="pre">START_TIME</span></span><a class="headerlink" href="#utils.Run.START_TIME" title="Link to this definition">¶</a></dt>
+<dd><p>Time when this run was started</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="utils.Run.TIME_FMT">
+<span class="sig-name descname"><span class="pre">TIME_FMT</span></span><a class="headerlink" href="#utils.Run.TIME_FMT" title="Link to this definition">¶</a></dt>
+<dd><p>Filename-firendly timestamp format string: ‘%Y-%m-%d_%H.%M.%S’</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="utils.Run.cfg">
+<span class="sig-name descname"><span class="pre">cfg</span></span><a class="headerlink" href="#utils.Run.cfg" title="Link to this definition">¶</a></dt>
+<dd><p>Config dict for whatever you’re running, probably loaded from a .toml file</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="utils.Run.logger">
+<span class="sig-name descname"><span class="pre">logger</span></span><a class="headerlink" href="#utils.Run.logger" title="Link to this definition">¶</a></dt>
+<dd><p>Logger instance for convenience</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="utils.Run.run_dir">
+<span class="sig-name descname"><span class="pre">run_dir</span></span><a class="headerlink" href="#utils.Run.run_dir" title="Link to this definition">¶</a></dt>
+<dd><p>Directory where all the output goes</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="utils.chamfer">
 <span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">chamfer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#utils.chamfer" title="Link to this definition">¶</a></dt>
 <dd><p>Compute the chamfer distance between p1 and p2</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>p1</strong> (<em>open3d.geometry.PointCloud</em>) – first point cloud</p></li>
+<li><p><strong>p2</strong> (<em>open3d.geometry.PointCloud</em>) – second point cloud</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>chamfer distance (float)</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="utils.clean_empty">
 <span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">clean_empty</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">folder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">noop</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#utils.clean_empty" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Remove all empty training runs (i.e. those without any .pth files).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>folder</strong> (<em>str</em>) – training run, run collection, or collection of run collections to clean</p></li>
+<li><p><strong>noop</strong> (<em>bool</em>) – set to true to print the operations without actually doing them</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="utils.clean_intermediate">
 <span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">clean_intermediate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">folder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">noop</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#utils.clean_intermediate" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Delete all training run snapshots except for those with the optimla validation loss, and the latest snapshots (which might not be the same)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>folder</strong> (<em>str</em>) – training run, run collection, or collection of run collections to clean</p></li>
+<li><p><strong>noop</strong> (<em>bool</em>) – set to true to print the operations without actually doing them</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="utils.compact_view">
-<span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">compact_view</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">geometries</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gdim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#utils.compact_view" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
+<span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">compact_view</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">geometries</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bbox_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#utils.compact_view" title="Link to this definition">¶</a></dt>
+<dd><p>Transform a list of geometries (in-place) so that they’re stacked end-to-end along the X-axis for better comparison</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>geometries</strong> – list of Open3D geometries to transform</p></li>
+<li><p><strong>bbox_size</strong> (<em>float</em>) – cubic bounding box of each object, if not specified then the bounding box is computed to match the bounds of each geometry element</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>list of bounding boxes of the models</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="utils.compare_pts">
 <span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">compare_pts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ref</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cmp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vox_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#utils.compare_pts" title="Link to this definition">¶</a></dt>
-<dd><p>Computes the hausdorff (in both directions), and chamfer distances between the input cloud, also the hausdorff and hamming distances (both in both directions) after quantising with both to vox_size</p>
-<p>ref: array of raw points, probably straight from a LIDAR or other point cloud source
-cmp: array of points retrieved from a RocNet code
-vox_size: size of the voxels used to quantise the point cloud for RocNet</p>
-<p>returns: dict of the metrics, with keys for quantised versions prefixed with q_</p>
+<dd><p>Computes the hausdorff (in both directions), and chamfer distances between the input cloud, also the hausdorff and hamming distances with both ref and cmp quantised to vox_size</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ref</strong> (<em>numpy.array</em>) – array of raw points, probably straight from a LIDAR or other point cloud source</p></li>
+<li><p><strong>cmp</strong> (<em>numpy.array</em>) – array of points retrieved from a RocNet code</p></li>
+<li><p><strong>vox_size</strong> (<em>float</em>) – size of the voxels used to quantise the point cloud for RocNet</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a dict of all the metrics, where quantised metrics (i.e. between voxel grids) are prefixed by <code class="docutils literal notranslate"><span class="pre">q_</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="utils.describe_run">
 <span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">describe_run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">run</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#utils.describe_run" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Returns a dict with various metadata about the training run, including run collection, train start time, epoch, and model UID (result of model_id plus the collection name and the start time)</p>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="utils.dir_type">
 <span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">dir_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dir</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#utils.dir_type" title="Link to this definition">¶</a></dt>
-<dd><p>Checks type of directory based on its contents:
-- ‘training-run’ contains train.log and no subdirectories
-- ‘run-collection’ contains train.toml but not train.log, may contain subdirectories
-- ‘run-collection-collection’ contains at least one subdirectory which is a run collection</p>
-<p>dir: dir to check</p>
+<dd><dl class="simple">
+<dt>Checks type of directory based on its contents:</dt><dd><ul class="simple">
+<li><p>‘training-run’ contains train.log and no subdirectories</p></li>
+<li><p>‘run-collection’ contains train.toml but not train.log, may or may not contain subdirectories</p></li>
+<li><p>‘run-collection-collection’ contains at least one subdirectory which is a run collection</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>dir</strong> (<em>str</em>) – folder to check</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>one of <code class="docutils literal notranslate"><span class="pre">'training-run'</span></code>, <code class="docutils literal notranslate"><span class="pre">'run-collection'</span></code>, <code class="docutils literal notranslate"><span class="pre">'run-collection-collection'</span></code> or None</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="utils.hamming">
 <span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">hamming</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">two_sided</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#utils.hamming" title="Link to this definition">¶</a></dt>
-<dd><p>Compute the hamming distance between two voxel grids</p>
+<dd><p>Compute the hamming distance between v1 and v2 (or just from v1 to v2 if two_sided=False)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>p1</strong> (<em>open3d.geometry.PointCloud</em>) – first point cloud</p></li>
+<li><p><strong>p2</strong> (<em>open3d.geometry.PointCloud</em>) – second point cloud</p></li>
+<li><p><strong>two_sided</strong> (<em>bool</em>) – set to false to compute the distance from p1 to p2 instead of in both directions (default=True)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>hamming distance (float)</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="utils.hausdorff">
 <span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">hausdorff</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">two_sided</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#utils.hausdorff" title="Link to this definition">¶</a></dt>
-<dd><p>Compute the Hausdorff distance between p1 and p2 (or from p1 to p2 if two_sided=False)</p>
+<dd><p>Compute the Hausdorff distance between p1 and p2 (or just from p1 to p2 if two_sided=False)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>p1</strong> (<em>open3d.geometry.PointCloud</em>) – first point cloud</p></li>
+<li><p><strong>p2</strong> (<em>open3d.geometry.PointCloud</em>) – second point cloud</p></li>
+<li><p><strong>two_sided</strong> (<em>bool</em>) – set to false to compute the distance from p1 to p2 instead of in both directions (default=True)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>hausdorff distance (float)</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="utils.model_id">
-<span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">model_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#utils.model_id" title="Link to this definition">¶</a></dt>
-<dd><p>Return</p>
+<span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">model_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#utils.model_id" title="Link to this definition">¶</a></dt>
+<dd><p>Return the ID of the model derived from model_config</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="utils.parse_training_run">
 <span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">parse_training_run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">run_dir</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#utils.parse_training_run" title="Link to this definition">¶</a></dt>
 <dd><p>List all info about a training run, including the loss, which snapshot has optimal validation loss, and whether the final model file exists</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>run_dir</strong> (<em>str</em>) – path to the training run folder</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary containing model information</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="utils.run_epochs">
 <span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">run_epochs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">run_dir</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#utils.run_epochs" title="Link to this definition">¶</a></dt>
-<dd><p>find all snapshot epochs for model_*_training.pth files, return list in ascending order</p>
+<dd><p>Find all snapshot epochs for model_*_training.pth files, return list in ascending order</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="utils.search_runs">
-<span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">search_runs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'notempty'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#utils.search_runs" title="Link to this definition">¶</a></dt>
-<dd><p>Recursive search for all trainig runs contained in parent. Returns a flat list of the full paths to all training runs</p>
+<span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">search_runs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'notempty'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#utils.search_runs" title="Link to this definition">¶</a></dt>
+<dd><p>Search for all training runs in the provided directory</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dir</strong> (<em>str</em>) – Folder which you expect to be a training run, a run collection, or a run collection collection</p></li>
+<li><p><strong>run_type</strong> (<em>str</em>) – Type of run to find, one of <code class="docutils literal notranslate"><span class="pre">'empty'</span></code>, <code class="docutils literal notranslate"><span class="pre">'notempty'</span></code>, or <code class="docutils literal notranslate"><span class="pre">'all'</span></code></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a flat list of all of the training runs in the folder</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="utils.tidy">
 <span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">tidy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">folder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">noop</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#utils.tidy" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Ensure that a training run contains a model.pth file which corresponds to the model weights which produced the optimal validation loss</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>folder</strong> (<em>str</em>) – training run, run collection, or collection of run collections to tidy</p></li>
+<li><p><strong>noop</strong> (<em>bool</em>) – set to true to print the operations without actually doing them</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="utils.visualise_interactive">
-<span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">visualise_interactive</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metrics</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gdim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_meta</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#utils.visualise_interactive" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
+<span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">visualise_interactive</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metrics</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bbox_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_meta</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#utils.visualise_interactive" title="Link to this definition">¶</a></dt>
+<dd><p>Visualise a list of geometries with a matching list of metrics and model metadata, with keyboard controls for cycling through models and samples</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>list</em>) – list of lists of geometries to render</p></li>
+<li><p><strong>metrics</strong> (<em>list</em>) – list of lists of metrics to print for each geometry sample</p></li>
+<li><p><strong>bbox_size</strong> (<em>float</em>) – bbox_size to pass to compact_geometries</p></li>
+<li><p><strong>model_meta</strong> (<em>list</em>) – list of metadata for each model</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="utils.vox_points">
 <span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">vox_points</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pts</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">PointCloud</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vox_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#utils.vox_points" title="Link to this definition">¶</a></dt>
-<dd><p>Voxelize pointcloud, retrieve voxel centers as a point cloud</p>
+<dd><p>Quantise a point cloud to the provided voxel size, return a point cloud of the centers of the occupied voxels</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pts</strong> (<em>float</em>) – Pointcloud to voxelise</p></li>
+<li><p><strong>vox_size</strong> – Voxel size to</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Pointcloud where the points are the centers of the occupied voxels in voxel-grid space</p>
+</dd>
+</dl>
 </dd></dl>
 
 </section>
@@ -473,7 +642,14 @@ vox_size: size of the voxels used to quantise the point cloud for RocNet</p>
 </ul>
 </li>
 <li><a class="reference internal" href="#module-utils">utils.py (members)</a><ul>
-<li><a class="reference internal" href="#utils.Run"><code class="docutils literal notranslate"><span class="pre">Run</span></code></a></li>
+<li><a class="reference internal" href="#utils.Run"><code class="docutils literal notranslate"><span class="pre">Run</span></code></a><ul>
+<li><a class="reference internal" href="#utils.Run.START_TIME"><code class="docutils literal notranslate"><span class="pre">Run.START_TIME</span></code></a></li>
+<li><a class="reference internal" href="#utils.Run.TIME_FMT"><code class="docutils literal notranslate"><span class="pre">Run.TIME_FMT</span></code></a></li>
+<li><a class="reference internal" href="#utils.Run.cfg"><code class="docutils literal notranslate"><span class="pre">Run.cfg</span></code></a></li>
+<li><a class="reference internal" href="#utils.Run.logger"><code class="docutils literal notranslate"><span class="pre">Run.logger</span></code></a></li>
+<li><a class="reference internal" href="#utils.Run.run_dir"><code class="docutils literal notranslate"><span class="pre">Run.run_dir</span></code></a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#utils.chamfer"><code class="docutils literal notranslate"><span class="pre">chamfer()</span></code></a></li>
 <li><a class="reference internal" href="#utils.clean_empty"><code class="docutils literal notranslate"><span class="pre">clean_empty()</span></code></a></li>
 <li><a class="reference internal" href="#utils.clean_intermediate"><code class="docutils literal notranslate"><span class="pre">clean_intermediate()</span></code></a></li>

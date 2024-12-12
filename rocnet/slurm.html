@@ -280,13 +280,10 @@ Mostly, this is the same as the Quickstart instructions except that you probably
 <li><p><code class="docutils literal notranslate"><span class="pre">weights</span></code> - a training config file, and an example training run with a set of model weights and training progress snapshots</p></li>
 </ol>
 </li>
-<li><p>Copy the <code class="docutils literal notranslate"><span class="pre">data</span></code> folder inside <code class="docutils literal notranslate"><span class="pre">example-data.zip</span></code> to <code class="docutils literal notranslate"><span class="pre">rocnet-example/data</span></code></p></li>
-<li><p>Copy <code class="docutils literal notranslate"><span class="pre">cluster-utils/slurm-train.sh</span></code> to  <code class="docutils literal notranslate"><span class="pre">rocnet-example/data/weights</span></code> and make sure that all of the <code class="docutils literal notranslate"><span class="pre">{{PLACEHOLDERS}}</span></code> are replaced with real stuff from your environment</p>
-<ul class="simple">
-<li><p>Also make sure that the <code class="docutils literal notranslate"><span class="pre">--mem</span></code> directives is within the memory limit of the GPU that you’re using</p></li>
-<li><p>Consider changing the <code class="docutils literal notranslate"><span class="pre">--time</span></code> directive if your job is likely to take longer (or shorter)</p></li>
-</ul>
-</li>
+<li><p>run <code class="docutils literal notranslate"><span class="pre">unzip</span> <span class="pre">example-data.zip</span></code> and move the resulting <code class="docutils literal notranslate"><span class="pre">example-data/data</span></code> folder to <code class="docutils literal notranslate"><span class="pre">rocnet-example/data</span></code></p></li>
+<li><p>Copy <code class="docutils literal notranslate"><span class="pre">cluster-utils/slurm-train.sh</span></code> to  <code class="docutils literal notranslate"><span class="pre">rocnet-example/data/weights</span></code> and make sure that all of the <code class="docutils literal notranslate"><span class="pre">{{PLACEHOLDERS}}</span></code> are replaced with real stuff from your environment
+- Also make sure that the <code class="docutils literal notranslate"><span class="pre">--mem</span></code> directives is within the memory limit of the GPU that you’re using
+- Consider changing the <code class="docutils literal notranslate"><span class="pre">--time</span></code> directive if your job is likely to take longer (or shorter)</p></li>
 <li><p>From within <code class="docutils literal notranslate"><span class="pre">rocnet-example/data/weights/</span></code> run <code class="docutils literal notranslate"><span class="pre">sbatch</span> <span class="pre">slurm-train.sh</span></code>, use <code class="docutils literal notranslate"><span class="pre">squeue</span> <span class="pre">--me</span></code> to check the status and/or wait for the <code class="docutils literal notranslate"><span class="pre">.out</span></code> file to appear.</p></li>
 </ol>
 <blockquote>
